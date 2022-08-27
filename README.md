@@ -28,7 +28,7 @@
 
 1. Clone the repository
 ```
-$ git clone https://github.com/SofianM17/django-schoolmanager
+$ git clone https://github.com/ShahKK/django-schoolmanager
 ```
 
 2. Make sure required stacks are installed by running the command ```$ pip freeze```, which provides a list of currently installed packages. If not, install the required packages using the following commands:
