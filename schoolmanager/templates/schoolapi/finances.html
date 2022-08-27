@@ -1,0 +1,128 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
+
+    <title>Finance</title>
+    <link rel="stylesheet" href="{% static 'schoolapi/css/style.css' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="top-nav-container">
+        <div class="wrapper">
+            <nav role="main">
+                <div class="title">
+                    Finance
+                </div>
+
+                <div class="logo">
+                    <img src="{% static 'schoolapi/images/logos.png' %}" alt="My image">
+                </div>
+
+                <div class="username">
+                    {{user.get_username}}
+                </div>
+
+                <div class="logout" href="/login">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+
+            </nav>
+        </div>
+
+    </div>
+
+    <div class="side-nav-container" style="height: 100%;">
+
+        <div class="sidebar" style="top: 150px;">
+        </div>
+
+        <div class="wrapper">
+            <nav id="menubar">
+                <ul class="nav-items">
+                    <li>
+                        <a href="/">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/tasks">Tasks</a>
+                    </li>
+                    <li>
+                        <a href="/clubsEvents">Clubs & Events</a>
+                    </li>
+                    <li>
+                        <a href="/finances">Finance</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </div>
+
+    <div class="finances-container">
+        <div class="item-title">
+            Finance
+        </div>
+        <button type="button" onclick="window.location.href='/add-finance'" class="btn-add-item" id="add">
+            <img src="{% static 'schoolapi/images/add.png' %}">
+        </button>
+        <!-- <button type="button" onclick="window.location.href='/add-finance'" class="btn-add-item" style="margin-left: 50px;">
+            <img src="{% static 'schoolapi/images/sub.png' %}">
+        </button> -->
+        {% for f in user.finance_set.all%}
+        <script>
+            document.getElementById("add").style.display = "none";
+        </script>
+        <div class="item-attributes">
+            <div class="item-background">
+            </div>
+            <ul class="show-items">
+                <div id="name">
+                    ${{f.initialBudget|floatformat:2}}
+                </div>
+                <table>
+                    <tr>
+                        <td>Income</td>
+                        <td>+${{f.income|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tuition</td>
+                        <td>-${{f.tuition|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right: 20px;">Equipment</td>
+                        <td>-${{f.equipment|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Books</td>
+                        <td>-${{f.books|floatformat:2}}</td>
+                    </tr>
+                </table>
+                <div id="name" style="margin-bottom: -30px;">
+                    Total: ${{f.total|floatformat:2}}
+                </div>
+                <li id="btn-delete-item" style="margin-left: 150px; margin-right: 20px;">
+                    <a href="{% url 'delete-finance' f.id%}">
+                        <img src="{% static 'schoolapi/images/Delete.png' %}">
+                    </a>
+                </li>
+            </ul>
+            <a href="{% url 'update-income' f.id%}" class="btn-add-item">
+                <img src="{% static 'schoolapi/images/add.png' %}">
+            </a>
+            <a href="{% url 'update-costs' f.id%}" class="btn-add-item" style="margin-left: 50px;">
+                <img src="{% static 'schoolapi/images/sub.png' %}">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
